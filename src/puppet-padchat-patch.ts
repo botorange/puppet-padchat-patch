@@ -52,10 +52,10 @@ export class PadchatPatch extends EventEmitter {
           device: {}
         }
       }
-      if (!memorySlot.currentUserId || memorySlot.currentUserId !== this.wxid) {
-        log.silly(PRE, `start() changing current user from ${memorySlot.currentUserId} to ${this.wxid}`)
-        memorySlot.currentUserId = this.wxid
-      }
+      
+      log.silly(PRE, `start() setting current user ${this.wxid}`)
+      memorySlot.currentUserId = this.wxid
+      
       this.memorySlot = memorySlot
 
       this.checkTimer = setInterval(() => this.checkData.bind(this)(), 1000)
