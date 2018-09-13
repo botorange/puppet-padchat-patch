@@ -43,6 +43,7 @@ process.on('unhandledRejection', (error) => {
     const padchatPatch = new PadchatPatch(token, name, wxid)
     padchatPatch
     .on('scan', (qrcode, status) => {
+      // You need to let the user scan the qrcode again here
       generate(qrcode, { small: true })
 
       const qrcodeImageUrl = [
@@ -52,8 +53,7 @@ process.on('unhandledRejection', (error) => {
       console.log(`[${status}] ${qrcodeImageUrl}\nScan QR Code above to log in: `)
     })
     .on('finish', async () => {
-      await bot.stop()
-      bot.start()
+      // restart your application here
     })
     .start()
     return
