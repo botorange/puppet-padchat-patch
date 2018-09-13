@@ -1,3 +1,1 @@
-import { PadchatPatch } from './puppet-padchat-patch'
-
-export { PadchatPatch }
+export { PadchatPatch } from './puppet-padchat-patch'
