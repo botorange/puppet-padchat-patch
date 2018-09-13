@@ -16,6 +16,8 @@ export interface PadchatMemorySlot {
   currentUserId?: string,
 }
 
+const PRE = 'PadchatPatch'
+
 export class PadchatPatch extends EventEmitter {
   private token: string
   private name: string
@@ -34,8 +36,9 @@ export class PadchatPatch extends EventEmitter {
   }
 
   public async start() {
-    log.info('PadchatPatch', `start() with token: ${this.token}, name: ${this.name}, wxid: ${this.wxid}`)
+    log.info(PRE, `start() with token: ${this.token}, name: ${this.name}, wxid: ${this.wxid}`)
     const memory = new MemoryCard(this.name)
+    log.silly(PRE, `start() trying to load memory card (${this.name})`)
     await memory.load()
     this.memory = memory.multiplex(PUPPET_MEMORY_NAME)
     let memorySlot = await this.readMemorySlot()
@@ -44,11 +47,13 @@ export class PadchatPatch extends EventEmitter {
       return
     } else {
       if (!memorySlot) {
+        log.silly(PRE, 'start() no memory card info, creating one')
         memorySlot = {
           device: {}
         }
       }
-      if (!memorySlot.currentUserId) {
+      if (!memorySlot.currentUserId || memorySlot.currentUserId !== this.wxid) {
+        log.silly(PRE, `start() changing current user from ${memorySlot.currentUserId} to ${this.wxid}`)
         memorySlot.currentUserId = this.wxid
       }
       this.memorySlot = memorySlot
@@ -58,6 +63,7 @@ export class PadchatPatch extends EventEmitter {
   }
 
   private async checkData () {
+    log.silly(PRE, `checkData()`)
     const authData = await this.gateway.getAuthData(this.wxid)
     const { qrcodeUrl, status, data } = authData
     switch (status) {
@@ -91,11 +97,13 @@ export class PadchatPatch extends EventEmitter {
   }
 
   private async readMemorySlot (): Promise<PadchatMemorySlot | undefined> {
+    log.silly(PRE, `readMemorySlot()`)
     const memorySlot = await this.memory!.get<PadchatMemorySlot>(MEMORY_SLOT_NAME)
     return memorySlot
   }
 
   private async saveMemorySlot () {
+    log.silly(PRE, `saveMemorySlot()`)
     this.memory!.set(MEMORY_SLOT_NAME, this.memorySlot)
     await this.memory!.save()
   }
