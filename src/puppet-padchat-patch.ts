@@ -53,9 +53,6 @@ export class PadchatPatch extends EventEmitter {
         }
       }
       
-      log.silly(PRE, `start() setting current user ${this.wxid}`)
-      memorySlot.currentUserId = this.wxid
-      
       this.memorySlot = memorySlot
 
       this.checkTimer = setInterval(() => this.checkData.bind(this)(), 1000)
@@ -80,6 +77,7 @@ export class PadchatPatch extends EventEmitter {
           data: Buffer.from(data!, 'hex').toString('base64'),
           token: ''
         }
+        this.memorySlot!.currentUserId = this.wxid
         await this.saveMemorySlot()
         this.emit('finish')
         this.stop()
@@ -104,7 +102,7 @@ export class PadchatPatch extends EventEmitter {
 
   private async saveMemorySlot () {
     log.silly(PRE, `saveMemorySlot()`)
-    this.memory!.set(MEMORY_SLOT_NAME, this.memorySlot)
+    await this.memory!.set(MEMORY_SLOT_NAME, this.memorySlot)
     await this.memory!.save()
   }
 }
