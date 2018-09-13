@@ -101,7 +101,7 @@ export class PadchatPatch extends EventEmitter {
   }
 
   private async saveMemorySlot () {
-    log.silly(PRE, `saveMemorySlot()`)
+    log.info(PRE, `saveMemorySlot() memory slot: ${JSON.stringify(this.memorySlot)}`)
     await this.memory!.set(MEMORY_SLOT_NAME, this.memorySlot)
     await this.memory!.save()
   }
