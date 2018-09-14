@@ -3,9 +3,15 @@
 ### What's this for
 This is a temporary solution for the current `-106` issue which blocks new users to login with `wechaty-puppet-padchat`
 
-### How to use
+### Please notice:
 
-**Notice: you need to upgrade your `wechaty-puppet-padcaht` to `v0.17.5` or later to use this patch**
+* **You need to upgrade your `wechaty-puppet-padcaht` to `v0.17.5` or later to use this patch**
+
+* **Currently you need to restart your application when the auth data get picked, so wechaty could pick up the auth data and use it to login to wechat. `reset` does not work for this case now, if you reset wechaty when the `finish` event emitted, you will still get `-106` error.**
+
+* **With this sulotion, when the user haven't logged in with wechaty before, there could be 3 times qrcode scan, which is not a great experience, but this is just a temporary solution, we are still working on fixing the issue and make everything back to before. If this solution doesn't work for you, please wait paitiently, we will publish new fix later**
+
+### How to use
 
 Please take a look at `/test/dev-test.ts` file for a complete example.
 
@@ -38,8 +44,3 @@ process.on('unhandledRejection', (error) => {
   }
 })
 ```
-
-* **Currently you need to restart your application when the auth data get picked, so wechaty could pick up the auth data and use it to login to wechat. `reset` does not work for this case now, if you reset wechaty when the `finish` event emitted, you will still get `-106` error.**
-
-
-* **Notice that with this sulotion, when the user haven't logged in with wechaty before, there could be 3 times qrcode scan, which is not a great experience, but this is just a temporary solution, we are still working on fixing the issue and make everything back to before. If this solution doesn't work for you, please wait paitiently, we will publish new fix later**
