@@ -5,6 +5,8 @@ This is a temporary solution for the current `-106` issue which blocks new users
 
 ### How to use
 
+**Notice: you need to upgrade your `wechaty-puppet-padcaht` to `v0.17.5` or later to use this patch**
+
 Please take a look at `/test/dev-test.ts` file for a complete example.
 
 ```typescript
