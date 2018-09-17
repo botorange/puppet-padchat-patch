@@ -26,6 +26,7 @@ export class PadchatPatch extends EventEmitter {
   private gateway: Gateway
   private memorySlot?: PadchatMemorySlot
   private checkTimer?: NodeJS.Timer
+  private firstQrcode: boolean
 
   constructor (token: string, name: string, wxid: string) {
     super()
@@ -33,6 +34,10 @@ export class PadchatPatch extends EventEmitter {
     this.name = name
     this.wxid = wxid
     this.gateway = new Gateway()
+    this.firstQrcode = true
+    if (wxid === '-106') {
+      throw new Error('Please update to v0.17.5 or above to use this patch.')
+    }
   }
 
   public async start() {
@@ -69,7 +74,12 @@ export class PadchatPatch extends EventEmitter {
         break
 
       case 'waiting':
-        log.silly('PadchatPatch', `waiting for scan`)
+        if (this.firstQrcode) {
+          this.emit('scan', qrcodeUrl)
+          this.firstQrcode = false
+        } else {
+          log.silly('PadchatPatch', `waiting for scan`)
+        }
         break
 
       case 'done':
