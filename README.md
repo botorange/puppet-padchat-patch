@@ -5,7 +5,7 @@ This is a temporary solution for the current `-106` issue which blocks new users
 
 ### Please notice:
 
-* **You need to upgrade your `wechaty-puppet-padcaht` to `v0.17.15` or later to use this patch**
+* **You need to upgrade your `wechaty-puppet-padchat` to `v0.17.15` or later to use this patch**
 
 * **The second parameter is name(or called profile in the past), you need to change it to the one same as your bot**
 
