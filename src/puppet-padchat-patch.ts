@@ -36,7 +36,7 @@ export class PadchatPatch extends EventEmitter {
     this.gateway = new Gateway()
     this.firstQrcode = true
     if (wxid === '-106') {
-      throw new Error('Please update to v0.17.5 or above to use this patch.')
+      throw new Error('Please update to v0.17.15 or above to use this patch.')
     }
   }
 
