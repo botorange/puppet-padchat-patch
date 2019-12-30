@@ -1,5 +1,7 @@
 # Notice
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/juzibot/puppet-padchat-patch.svg)](https://greenkeeper.io/)
+
 `-106` issue has been fixed in `wechaty-puppet-padchat`, please update to `v0.17.16` or above. 
 
 This patch will be closed.
